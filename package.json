@@ -1,0 +1,23 @@
+{
+  "name": "noexmo",
+  "version": "1.0.0",
+  "description": "Noexma",
+  "main": "demo.js",
+  "dependencies": {
+    "mongodb": "^3.6.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnKiTKaMbOj18/noexmo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnKiTKaMbOj18/noexmo/issues"
+  },
+  "homepage": "https://github.com/AnKiTKaMbOj18/noexmo#readme"
+}
