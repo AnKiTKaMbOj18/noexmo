@@ -21,22 +21,38 @@ const getNotes = () => {
   return "Your notes...";
 };
 
-const listNotes=()=>{
+const readNodes = (title) => {
   const notes = loadNotes();
-  if(notes.length> 0) {
-    notes.forEach(note => console.log(chalk.bgBlue.whiteBright(note.title)));
+  if (notes.length > 0) {
+    const requestedNote = notes.find((note) => note.title === title);
+    console.log("requestedNote: ", requestedNote);
+    if (requestedNote) {
+      console.log(chalk.blue(requestedNote.title));
+    } else {
+      console.log(
+        chalk.redBright.redBright(`No note found for requested title: ${title}`)
+      );
+    }
+  } else {
+    console.log(chalk.red("No notes available!"));
   }
-  else {
+};
+
+const listNotes = () => {
+  const notes = loadNotes();
+  if (notes.length > 0) {
+    notes.forEach((note) => console.log(chalk.bgBlue.whiteBright(note.title)));
+  } else {
     console.log(chalk.bgRed.whiteBright("No notes found"));
   }
-}
+};
 
 const addNote = (title, body) => {
   const notes = loadNotes();
 
-  const duplicateNote = notes.filter((note) => note.title === title);
-
-  if (duplicateNote.length === 0) {
+  // const duplicateNote = notes.filter((note) => note.title === title); // note performant way
+  const duplicateNote = notes.find((note) => note.title === title); // performant way
+  if (!duplicateNote) {
     notes.push({
       title,
       body,
@@ -62,11 +78,10 @@ const removeNote = (title) => {
   }
 };
 
-
-
 module.exports = {
   getNotes,
   addNote,
   removeNote,
-  listNotes
+  listNotes,
+  readNodes,
 };

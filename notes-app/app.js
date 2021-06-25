@@ -2,7 +2,7 @@ const validator = require("validator");
 const chalk = require("chalk");
 const yargs = require("yargs");
 
-const { getNotes, addNote, removeNote, listNotes } = require("./notes.js");
+const { getNotes, addNote, removeNote, listNotes, readNodes } = require("./notes.js");
 
 
 const notes = getNotes();
@@ -74,9 +74,17 @@ yargs.command({
 // Creating read command
 yargs.command({
   command: "read",
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
   describe: "Read a note",
-  handler() {
+  handler(argv) {
     console.log("Reading the note!");
+    readNodes(argv.title);
   }
 });
 
