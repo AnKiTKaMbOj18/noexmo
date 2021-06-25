@@ -17,10 +17,12 @@ const loadNotes = () => {
   }
 };
 
+// command line command: node app.js
 const getNotes = () => {
   return "Your notes...";
 };
 
+// command line command: node app.js read --title="title value"
 const readNodes = (title) => {
   const notes = loadNotes();
   if (notes.length > 0) {
@@ -38,6 +40,7 @@ const readNodes = (title) => {
   }
 };
 
+// command line command: node app.js list
 const listNotes = () => {
   const notes = loadNotes();
   if (notes.length > 0) {
@@ -47,6 +50,7 @@ const listNotes = () => {
   }
 };
 
+// command line command: node app.js add --title="title value" --body="body value"
 const addNote = (title, body) => {
   const notes = loadNotes();
 
@@ -64,6 +68,7 @@ const addNote = (title, body) => {
   }
 };
 
+// command line command: node app.js remove --title="value of title you want to remove"
 const removeNote = (title) => {
   const notes = loadNotes();
   const requestedNotes = notes.filter((note) => note.title !== title);
