@@ -2,7 +2,7 @@ const validator = require("validator");
 const chalk = require("chalk");
 const yargs = require("yargs");
 
-const getNotes = require("./notes.js");
+const { getNotes, addNote, removeNote } = require("./notes.js");
 
 
 const notes = getNotes();
@@ -36,15 +36,24 @@ yargs.command({
     console.log("Adding a new note!", argv);
     console.log("Title: ", argv.title);
     console.log("Body: ", argv.body);
+    addNote(argv.title, argv.body);
   }
 });
 
 // Creating remove command
 yargs.command({
   command: "remove",
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
   describe: "remove a note",
-  handler: function() {
+  handler: function(argv) {
     console.log("Removing the note!");
+    removeNote(argv.title);
   }
 });
 
@@ -69,9 +78,9 @@ yargs.command({
 // to create yargs custom commands
 // add, remove, read, list
 
-console.log(process.argv); // to read the command line arguments ex: node app.js Ankit
+// console.log(process.argv); // to read the command line arguments ex: node app.js Ankit
 
-console.log(yargs.argv);
+// console.log(yargs.argv);
 // alternate to yargs.argv if we dont want to run it and only want to parse and add yargs command/properties
 // use yargs.parse()
 yargs.parse();
