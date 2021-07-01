@@ -32,7 +32,7 @@ app.use(express.static(publicDirPath));
 app.get("/home", (req, res) => {
   res.render("index", {
     title: "Weather App",
-    description: "Home page for weather app",
+    description: "Use this site to get your weather!",
     footerText: "Home Footer",
     createdBy: "Ankit Kamboj",
   });
