@@ -6,7 +6,7 @@ const { forecast } = require("./utils/forecast");
 const { testApi } = require("./utils/testApi");
 
 const app = express();
-
+const port = process.env.PORT || 3000;
 // console.log(__dirname);
 // console.log(path.join(__dirname, "../public"));
 
@@ -87,7 +87,7 @@ app.get("/weather", (req, res) => {
     forecast(data.latitude, data.longitude, (error, forecastData) => {
       if (error) {
         return res.send({
-          error
+          error,
         });
       }
       // console.log(data.location);
@@ -96,7 +96,7 @@ app.get("/weather", (req, res) => {
         location: data.location,
         forecast: forecastData,
         address: req.query.address,
-      })
+      });
     });
   });
   // res.send({
@@ -106,19 +106,19 @@ app.get("/weather", (req, res) => {
   // });
 });
 
-app.get("/test",(req,res)=>{
-  testApi((error, data)=>{
-    if(error) {
+app.get("/test", (req, res) => {
+  testApi((error, data) => {
+    if (error) {
       res.send({
         error: error,
-      })
+      });
     } else {
       res.send({
-        data
-      })
+        data,
+      });
     }
-  })
-})
+  });
+});
 
 app.get("/products", (req, res) => {
   if (!req.query.search) {
@@ -154,6 +154,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is up on port 3000");
+app.listen(port, () => {
+  console.log("Server is up on port " + port);
 });
