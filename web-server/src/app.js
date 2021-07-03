@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
+require("dotenv").config();
+
 const { geoCode } = require("./utils/geocode");
 const { forecast } = require("./utils/forecast");
 const { testApi } = require("./utils/testApi");
@@ -28,6 +30,15 @@ app.use(express.static(publicDirPath));
 //   res.header('Access-Control-Allow-Origin', '*');
 //   next();
 // });
+
+app.get("", (req, res) => {
+  res.render("index", {
+    title: "Weather App",
+    description: "Use this site to get your weather!",
+    footerText: "Home Footer",
+    createdBy: "Ankit Kamboj",
+  });
+});
 
 app.get("/home", (req, res) => {
   res.render("index", {

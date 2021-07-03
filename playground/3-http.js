@@ -1,6 +1,6 @@
 const http = require("http");
 
-const url = `http://api.weatherstack.com/current?access_key=7f59a3da70dcf69f6a75c17eb046a61e&query=40.7306,-73.9866&units=m`;
+const url = `http://api.weatherstack.com/current?access_key=${process.env.WEATHER_STACK_ACCESS_KEY}&query=40.7306,-73.9866&units=m`;
 
 const request = http.request(url, (response) => {
   let data = "";
