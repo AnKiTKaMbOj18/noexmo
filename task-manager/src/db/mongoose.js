@@ -35,35 +35,55 @@ const User = mongoose.model("User", {
       }
     },
   },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 7,
+    validate(value) {
+      // const isValidPassword = validator.isStrongPassword(value, {
+      //   minLength: 6,
+      // });
+      // if (!isValidPassword) {
+      //   throw new Error("Password is not strong! ", isValidPassword);
+      // }
+      if (value.toLowerCase().includes("password")) {
+        throw new Error("Password cannot contain 'password'");
+      }
+    },
+  },
 });
 
 const Task = mongoose.model("Task", {
   description: {
     type: String,
+    trim: true,
+    required: true,
   },
   completed: {
     type: Boolean,
+    default: false,
   },
 });
 
-const myUser = new User({
-  name: "  Luke  ",
-  // age: 22,
-  email: "LUKE@test.com  ",
-});
+// const myUser = new User({
+//   name: "  Alex  ",
+//   age: 22,
+//   email: "Alex@test.com  ",
+//   password: "alex@test ",
+// });
 
-myUser
-  .save()
-  .then(() => {
-    console.log(myUser);
-  })
-  .catch((error) => {
-    console.log("Error: ", error);
-  });
+// myUser
+//   .save()
+//   .then(() => {
+//     console.log(myUser);
+//   })
+//   .catch((error) => {
+//     console.log("Error: ", error);
+//   });
 
 // const myTask = new Task({
-//   description: "Task 1",
-//   completed: true,
+//   description: " Task 2 ",
 // });
 
 // myTask
