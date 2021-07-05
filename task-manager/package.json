@@ -4,14 +4,19 @@
   "description": "task-app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "Ankit Kamboj",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "mongodb": "^3.6.9",
     "mongoose": "^5.13.2",
     "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
   }
 }
