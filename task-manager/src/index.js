@@ -59,6 +59,30 @@ app.post("/tasks", (req, res) => {
     });
 });
 
+app.get("/tasks", (req, res) => {
+  Task.find({})
+    .then((tasks) => {
+      res.send(tasks);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.get("/tasks/:id", (req, res) => {
+  console.log(req.params);
+  Task.findById({ _id: req.params.id })
+    .then((task) => {
+      if (!task) {
+        return res.status(404).send();
+      }
+      res.send(task);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
 app.listen(port, () => {
   console.log("Server is up n running on port " + port);
 });
