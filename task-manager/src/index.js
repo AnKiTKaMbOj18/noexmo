@@ -43,6 +43,46 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
+app.patch("/users/:id", async (req, res) => {
+
+  const allowedList = ["name", "email","password","age"];
+  const updateData = Object.keys(req.body);
+
+  const isValidUpdateEntry = updateData.every(update=> allowedList.includes(update));
+
+  if(!isValidUpdateEntry) {
+    return res.status(400).send({error: "Invalid keys for update!"})
+  }
+
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!user) {
+      return res.status(404).send();
+    }
+    return res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.delete("/users/:id", async (req, res) => {
+  console.log(req.params);
+  try {
+    const user = await User.findByIdAndDelete({ _id: req.params.id });
+    if (!user) {
+      return res.status(404).send();
+    }
+    return res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 app.post("/tasks", async (req, res) => {
   console.log(req.body);
   const task = new Task(req.body);
@@ -69,6 +109,46 @@ app.get("/tasks/:id", async (req, res) => {
 
   try {
     const task = await Task.findById({ _id: req.params.id });
+    if (!task) {
+      return res.status(404).send();
+    }
+    res.send(task);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.patch("/tasks/:id", async (req, res) => {
+
+  const allowedList = ["completed", "description"];
+  const updateData = Object.keys(req.body);
+
+  const isValidUpdateEntry = updateData.every(update=> allowedList.includes(update));
+
+  if(!isValidUpdateEntry) {
+    return res.status(400).send({error: "Invalid keys for update!"})
+  }
+
+  try {
+    const task = await Task.findByIdAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!task) {
+      return res.status(404).send();
+    }
+    return res.send(task);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.delete("/tasks/:id", async (req, res) => {
+  console.log(req.params);
+
+  try {
+    const task = await Task.findByIdAndDelete({ _id: req.params.id });
     if (!task) {
       return res.status(404).send();
     }
