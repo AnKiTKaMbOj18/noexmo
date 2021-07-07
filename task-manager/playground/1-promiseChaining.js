@@ -14,3 +14,15 @@ User.findByIdAndUpdate("60e35ceb398ca183decd1174", { age: 10 })
   .catch((error) => {
     console.log(error);
   });
+
+async function findAndUpdateUser(id, age) {
+  const user = await User.findByIdAndUpdate(id, { age });
+  const count = await User.countDocuments({ age });
+  return count;
+}
+
+findAndUpdateUser("60e35ceb398ca183decd1174", 20)
+  .then((count) => {
+    console.log(count);
+  })
+  .catch((e) => console.log(e));
