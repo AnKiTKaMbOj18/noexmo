@@ -6,16 +6,18 @@ const taskRouter = require("./routers/taskRouter");
 
 const app = express();
 const port = process.env.PORT || 3000;
+
 // middleware
-app.use((req, res, next) => {
-  if (req.method === "GET") {
-    res.send("GET request are disabled!");
-  } else {
-    next();
-  }
-  // console.log(req.method, req.path);
-  // next();
-});
+
+// app.use((req, res, next) => {
+//   if (req.method === "GET") {
+//     res.send("GET request are disabled!");
+//   } else {
+//     next();
+//   }
+//   // console.log(req.method, req.path);
+//   // next();
+// });
 
 // middleware for maintainance
 // app.use((req, res, next) => {
