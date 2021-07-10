@@ -8,12 +8,13 @@ const router = new express.Router();
 // });
 
 router.post("/users", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const user = new User(req.body);
 
   try {
     await user.save();
-    res.status(201).send(user);
+    const token = await user.generateAuthToken();
+    res.status(201).send({ user, token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -25,8 +26,10 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     );
-    console.log(user);
-    res.send(user);
+    const token = await user.generateAuthToken();
+
+    // console.log(user);
+    res.send({ user, token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -42,7 +45,7 @@ router.get("/users", async (req, res) => {
 });
 
 router.get("/users/:id", async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
   try {
     const user = await User.findById({ _id: req.params.id });
     if (!user) {
@@ -90,7 +93,7 @@ router.patch("/users/:id", async (req, res) => {
 });
 
 router.delete("/users/:id", async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
   try {
     const user = await User.findByIdAndDelete({ _id: req.params.id });
     if (!user) {

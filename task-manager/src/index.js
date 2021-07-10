@@ -16,6 +16,21 @@ app.listen(port, () => {
   console.log("Server is up n running on port " + port);
 });
 
+
+// testing jwt token functionality
+// const jwt = require("jsonwebtoken");
+
+// const myFunction = async () => {
+//   const authToken =jwt.sign({ _id: "abc123!" },"thisismynewsecret",{expiresIn: '7 days'});
+//   console.log(authToken);
+
+//   const verifiedToken = jwt.verify(authToken,"thisismynewsecret");
+//   console.log(verifiedToken);
+// };
+
+// myFunction();
+
+// testing bcrypt hash functionality
 // const bcrypt = require("bcryptjs");
 
 // const myFunction = async () => {

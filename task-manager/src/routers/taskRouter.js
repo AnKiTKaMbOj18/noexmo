@@ -4,7 +4,7 @@ const Task = require("../models/task");
 const taskRouter = new express.Router();
 
 taskRouter.post("/tasks", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const task = new Task(req.body);
 
   try {
@@ -25,7 +25,7 @@ taskRouter.get("/tasks", async (req, res) => {
 });
 
 taskRouter.get("/tasks/:id", async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
 
   try {
     const task = await Task.findById({ _id: req.params.id });
@@ -71,7 +71,7 @@ taskRouter.patch("/tasks/:id", async (req, res) => {
 });
 
 taskRouter.delete("/tasks/:id", async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
 
   try {
     const task = await Task.findByIdAndDelete({ _id: req.params.id });
