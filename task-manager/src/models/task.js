@@ -11,16 +11,21 @@ const taskSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-});
-
-taskSchema.pre("save", async function (next) {
-  const task = this;
-
-  console.log("from task schema middleware!");
-
-  next();
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
 });
 
 const Task = mongoose.model("Task", taskSchema);
 
 module.exports = Task;
+
+// taskSchema.pre("save", async function (next) {
+//   const task = this;
+
+//   console.log("from task schema middleware!");
+
+//   next();
+// });

@@ -51,17 +51,23 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+userSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "owner",
+});
+
 // this method is used for securing our return data
 // it gets called when we send response back using res.send method
 // express takes care of calling it internally before sending response back.
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
   delete userObject.password;
   delete userObject.tokens;
 
   return userObject;
-}
+};
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;

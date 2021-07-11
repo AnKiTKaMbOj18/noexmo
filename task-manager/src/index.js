@@ -7,7 +7,35 @@ const taskRouter = require("./routers/taskRouter");
 const app = express();
 const port = process.env.PORT || 3000;
 
+// app.use(cors());
+app.use(express.json());
+
+app.use(userRouter);
+app.use(taskRouter);
+
+app.listen(port, () => {
+  console.log("Server is up n running on port " + port);
+});
+
+// const Task = require("./models/task");
+// const User = require("./models/user");
+
+// const main = async () => {
+//   // const task = await Task.findById("60eab4ddab943294a8c36b10");
+//   // const user = await task.populate("owner").execPopulate();
+//   // console.log(task.owner);
+
+//   const user = await User.findById("60eaae5a6a67728aedde4f6c");
+//   await user.populate("tasks").execPopulate();
+//   console.log(user.tasks);
+// };
+
+// main();
+
 // middleware
+// without middleware : new request -> new route handler
+//
+// with middleware: new request -> do something -> run new handler
 
 // app.use((req, res, next) => {
 //   if (req.method === "GET") {
@@ -25,20 +53,6 @@ const port = process.env.PORT || 3000;
 //   // console.log(req.method, req.path);
 //   // next();
 // });
-
-// app.use(cors());
-app.use(express.json());
-
-app.use(userRouter);
-app.use(taskRouter);
-
-// without middleware : new request -> new route handler
-//
-// with middleware: new request -> do something -> run new handler
-
-app.listen(port, () => {
-  console.log("Server is up n running on port " + port);
-});
 
 // demo example for toJSON function
 // toJSON function gets called when we do JSON.stringify on any object
