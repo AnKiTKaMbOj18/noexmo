@@ -86,7 +86,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
 };
 
 // generateAuthToken
-
 // Hash the plain password before saving/updating
 userSchema.pre("save", async function (next) {
   const user = this;
