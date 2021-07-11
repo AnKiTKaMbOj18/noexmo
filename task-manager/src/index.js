@@ -40,6 +40,20 @@ app.listen(port, () => {
   console.log("Server is up n running on port " + port);
 });
 
+// demo example for toJSON function
+// toJSON function gets called when we do JSON.stringify on any object
+// In express as well when we send response back it first calls JSON.stringfy internally
+// on the return object and calls toJSON method.
+
+// const pet = {
+//   name: "jim"
+// }
+// pet.toJSON=function() {
+//   console.log(this);
+//   return {};
+// }
+// console.log(JSON.stringify(pet));
+
 // testing jwt token functionality
 // const jwt = require("jsonwebtoken");
 
