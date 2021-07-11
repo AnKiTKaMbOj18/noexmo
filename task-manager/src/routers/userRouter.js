@@ -14,7 +14,7 @@ router.post("/users", async (req, res) => {
   try {
     await user.save();
     const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
+    res.status(201).send({ user: user.getPublicProfile(), token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -29,7 +29,7 @@ router.post("/users/login", async (req, res) => {
     const token = await user.generateAuthToken();
 
     // console.log(user);
-    res.send({ user, token });
+    res.send({ user: user.getPublicProfile(), token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -49,8 +49,10 @@ router.post("/users/logout", auth, async (req, res) => {
 
 router.post("/users/logoutAll", auth, async (req, res) => {
   try {
-    const isValidUser = req.user.tokens.find(token=> token.token === req.token);
-    if(isValidUser) {
+    const isValidUser = req.user.tokens.find(
+      (token) => token.token === req.token
+    );
+    if (isValidUser) {
       req.user.tokens = [];
     }
     await req.user.save();
