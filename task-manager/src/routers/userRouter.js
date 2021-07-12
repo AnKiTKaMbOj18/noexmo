@@ -1,7 +1,26 @@
 const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
+const multer = require("multer");
+const taskRouter = require("./taskRouter");
+
 const router = new express.Router();
+
+const upload = multer({
+  dest: "avatars",
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return callback(new Error("Please upload a image"));
+    }
+    callback(undefined, true);
+    // callback(new Error("File must be a word doc!"));
+    // cb(undefined, true);
+    // cb(undefined, false);
+  },
+});
 
 router.post("/users", async (req, res) => {
   // console.log(req.body);
@@ -57,6 +76,17 @@ router.post("/users/logoutAll", auth, async (req, res) => {
     res.status(500).send();
   }
 });
+
+router.post(
+  "/users/me/avatar",
+  upload.single("avatar"),
+  (req, res) => {
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+);
 
 router.get("/users/me", auth, async (req, res) => {
   try {

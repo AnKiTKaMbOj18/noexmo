@@ -7,6 +7,38 @@ const taskRouter = require("./routers/taskRouter");
 const app = express();
 const port = process.env.PORT || 3000;
 
+const multer = require("multer");
+const upload = multer({
+  dest: "images",
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/\.(doc|docx)$/)) {
+      return callback(new Error("Please upload a word doc!"));
+    }
+    callback(undefined, true);
+    // callback(new Error("File must be a word doc!"));
+    // cb(undefined, true);
+    // cb(undefined, false);
+  },
+});
+
+// const myMiddleware = (req,res,next)=>{
+//   throw new Error("From my middleware!")
+// }
+
+app.post(
+  "/upload",
+  upload.single("upload"),
+  (req, res) => {
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+);
+
 // app.use(cors());
 app.use(express.json());
 
