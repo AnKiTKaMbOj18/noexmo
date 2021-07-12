@@ -1,8 +1,9 @@
 const express = require("express");
+const multer = require("multer");
+const sharp = require("sharp");
+
 const User = require("../models/user");
 const auth = require("../middleware/auth");
-const multer = require("multer");
-const taskRouter = require("./taskRouter");
 
 const router = new express.Router();
 
@@ -119,13 +120,17 @@ router.delete("/users/me", auth, async (req, res) => {
   }
 });
 
-
 router.post(
   "/users/me/avatar",
   auth,
   upload.single("avatar"),
   async (req, res) => {
-    req.user.avatar = req.file.buffer;
+    // req.user.avatar = req.file.buffer;
+    const buffer = await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toBuffer();
+    req.user.avatar = buffer;
     await req.user.save();
     res.send();
   },
@@ -149,15 +154,15 @@ router.delete(
 
 router.get(
   "/users/:id/avatar",
-  auth,
+  // auth,
   async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
       // const avatar = await req.user.save();
-      if(!user && !user.avatar) {
-        throw new Error("");
+      if (!user && !user.avatar) {
+        throw new Error("Avatar not available!");
       }
-      res.set("Content-Type","image/jpg");
+      res.set("Content-Type", "image/png");
       res.send(user.avatar);
     } catch (error) {
       res.status(404).send();
@@ -247,4 +252,3 @@ module.exports = router;
 //     res.status(500).send(error);
 //   }
 // });
-
